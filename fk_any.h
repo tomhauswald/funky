@@ -1,7 +1,5 @@
 #include "fk_foreach.h"
 
-
-
 #define FK_ANY_RESBUF fk_result_
 
 #define FK_ANY_BODY(Pred)                         \
@@ -11,8 +9,6 @@
             break;                                \
         }                                         \
     }
-
-
 
 #define FK_ANY(Begin, IncrementAction, End, Pred) \
     ({                                            \
@@ -40,5 +36,3 @@
                            FK_ANY_BODY(Pred) );   \
         FK_ANY_RESBUF;                            \
     })
-
-

@@ -61,6 +61,8 @@ void print_list(void) {
 
 extern void fk_test_foreach(void);
 extern void fk_test_any(void);
+extern void fk_test_all(void);
+extern void fk_test_count(void);
 
 int main(void) {
 
@@ -73,6 +75,14 @@ int main(void) {
     printf("\n\nTesting 'any' functionality...\n\n");
 
     fk_test_any();
+
+    printf("\n\nTesting 'all' functionality...\n\n");
+
+    fk_test_all();
+
+    printf("\n\nTesting 'count' functionality...\n\n");
+
+    fk_test_count();
 
     return 0;
 } 
