@@ -63,6 +63,7 @@ extern void fk_test_foreach(void);
 extern void fk_test_any(void);
 extern void fk_test_all(void);
 extern void fk_test_count(void);
+extern void fk_test_filter(void);
 
 int main(void) {
 
@@ -83,6 +84,10 @@ int main(void) {
     printf("\n\nTesting 'count' functionality...\n\n");
 
     fk_test_count();
+
+    printf("\n\nTesting 'filter' functionality...\n\n");
+    
+    fk_test_filter();
 
     return 0;
 } 
