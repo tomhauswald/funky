@@ -64,30 +64,34 @@ extern void fk_test_any(void);
 extern void fk_test_all(void);
 extern void fk_test_count(void);
 extern void fk_test_filter(void);
+extern void fk_test_sum(void);
+
+char const* categories[] = { 
+    "foreach", 
+    "any", 
+    "all",
+    "count",
+    "filter",
+    "sum"
+};
+
+void (*funcs[])(void) = {
+    &fk_test_foreach,
+    &fk_test_any,
+    &fk_test_all,
+    &fk_test_count,
+    &fk_test_filter,
+    &fk_test_sum
+};
 
 int main(void) {
 
     init_list();
 
-    printf("Testing 'foreach' functionality...\n\n");
-
-    fk_test_foreach();
-
-    printf("\n\nTesting 'any' functionality...\n\n");
-
-    fk_test_any();
-
-    printf("\n\nTesting 'all' functionality...\n\n");
-
-    fk_test_all();
-
-    printf("\n\nTesting 'count' functionality...\n\n");
-
-    fk_test_count();
-
-    printf("\n\nTesting 'filter' functionality...\n\n");
-    
-    fk_test_filter();
+    for(size_t i = 0; i < sizeof(categories) / sizeof(char*); ++i) {
+        printf("\n\nRunning test category '%s'...\n\n", categories[i]);
+        (*funcs[i])();
+    }
 
     return 0;
 } 
