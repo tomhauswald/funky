@@ -66,9 +66,12 @@
     sizeof('Array') / sizeof('Array'[0]).
 */
 
+#define FK_LENGTH_STATIC(Array)                       \
+    ( sizeof( Array ) / sizeof( (Array) [0] ) )
+
 #define FK_FOREACH_STATIC(Array, Body)                \
     FK_FOREACH_LINEAR(                                \
         Array,                                        \
-        sizeof(Array) / sizeof((Array)[0]),           \
+        FK_LENGTH_STATIC(Array),                      \
         Body                                          \
     )
