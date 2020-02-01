@@ -52,7 +52,7 @@ void test_foreach(void) {
 
 
 
-    linked_list_t* list = make_list(len);
+    linked_list_t* list = list_make_range(len);
     print_list(list);
 
 
@@ -85,4 +85,6 @@ void test_foreach(void) {
     );
 
     print_list(list);
+
+    list_delete(list);
 }

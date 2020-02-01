@@ -1,7 +1,7 @@
 #include "common.h"
 #include "linked_list.h"
 
-linked_list_t* make_list(size_t len) {
+linked_list_t* list_make_range(size_t len) {
     linked_list_t* list = (linked_list_t*) malloc(sizeof(linked_list_t) * len);
     list->value = 0;
     list->next = NULL;
@@ -38,6 +38,14 @@ linked_list_t* list_nth_item(linked_list_t* list, size_t n) {
         list = (NULL != list) ? (list->next) : NULL;
     }
     return list;
+}
+
+void list_delete(linked_list_t* list) {
+    while(list) {
+        linked_list_t* temp = list;
+        list = list->next;
+        free(temp);
+    }
 }
 
 void _print_list(char const* name, linked_list_t const* list) {
