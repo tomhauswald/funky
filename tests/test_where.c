@@ -10,7 +10,6 @@ void test_where(void) {
         size_t num_all;
         int all_[input_len];
         (void) where(input, it->value, it = it->next, NULL, true, all_, &num_all);
-        printf("[%lu] ", num_all);
         print_static_array(all_);
     }
 
@@ -19,9 +18,7 @@ void test_where(void) {
         size_t num_all;
         int* all_;
         all_ = where(input, it->value, it = it->next, NULL, true, NULL, &num_all);
-        printf("[%lu] ", num_all);
-        foreach_linear(all_, num_all, printf("%d ", *it));
-        clearln();
+        print_array(all_, num_all);
     }
 
 
@@ -29,8 +26,6 @@ void test_where(void) {
         size_t num_even;
         int* even;
         even = where(input, it->value, it = it->next, NULL, it->value % 2 == 0, NULL, &num_even);
-        printf("[%lu] ", num_even);
-        foreach_linear(even, num_even, printf("%d ", *it));
-        clearln();
+        print_array(even, num_even);
     }
 }

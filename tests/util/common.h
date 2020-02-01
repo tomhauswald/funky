@@ -11,8 +11,7 @@ char const* btoa(bool b);
 #define init_static_array(Array) \
     foreach_static(Array, *it = i);
 
-#define print_static_array(Array) { \
-    if(NULL != (Array)) printf("%d", (Array)[0]); \
-    foreach_linear((Array) + 1, static_array_len(Array) - 1, printf(", %d", *it)); \
-    clearln(); \
-}
+void print_array(int* arr, size_t len);
+
+#define print_static_array(Array) \
+    print_array(Array, static_array_len(Array))

@@ -11,8 +11,18 @@ linked_list_t* make_list(size_t len) {
     return list;
 }
 
+size_t list_len(linked_list_t const* list) {
+    size_t len = 0ul;
+    if(list) ++len;
+    while(list->next) {
+        ++len; 
+        list = list->next;
+    }
+    return len;
+}
+
 linked_list_t* list_tail(linked_list_t* list) {
-    while(list->next) list = list->next;
+    while(list && list->next) list = list->next;
     return list;    
 }
 
@@ -30,14 +40,17 @@ linked_list_t* list_nth_item(linked_list_t* list, size_t n) {
     return list;
 }
 
-void print_list(linked_list_t* list) {
-    if(NULL != list) {
+void print_list(linked_list_t const* list) {
+    printf("Linked List\n");
+    printf("  length = %lu,\n", list_len(list));
+    printf("  values = [");
+    if(list) {
         printf("%d", list->value);
         list = list->next;
     }
-    while(NULL != list) {
+    while(list) {
         printf(", %d", list->value);
         list = list->next;
     }
-    clearln();
+    printf("]\n");
 }
