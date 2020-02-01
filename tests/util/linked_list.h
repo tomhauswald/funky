@@ -17,4 +17,7 @@ void list_append(linked_list_t* list, int value);
 
 linked_list_t* list_nth_item(linked_list_t* list, size_t n);
 
-void print_list(linked_list_t const* list);
+void _print_list(char const* name, linked_list_t const* list);
+
+#define print_list(ListPtr) \
+    _print_list(#ListPtr, ListPtr)

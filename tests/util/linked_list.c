@@ -40,9 +40,9 @@ linked_list_t* list_nth_item(linked_list_t* list, size_t n) {
     return list;
 }
 
-void print_list(linked_list_t const* list) {
-    printf("Linked List\n");
-    printf("  length = %lu,\n", list_len(list));
+void _print_list(char const* name, linked_list_t const* list) {
+    printf("Linked List '%s'\n", name);
+    printf("  length = %lu\n", list_len(list));
     printf("  values = [");
     if(list) {
         printf("%d", list->value);

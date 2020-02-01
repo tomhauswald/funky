@@ -28,4 +28,18 @@ void test_where(void) {
         even = where(input, it->value, it = it->next, NULL, it->value % 2 == 0, NULL, &num_even);
         print_array(even, num_even);
     }
+
+    {
+        size_t num_odd;
+        int* odd;
+        odd = where(input, it->value, it = it->next, NULL, it->value % 2 == 1, NULL, &num_odd);
+        print_array(odd, num_odd);
+    }
+
+    {
+        size_t num_leq_7;
+        int* leq_7;
+        leq_7 = where(input, it->value, it = it->next, NULL, it->value <= 7, NULL, &num_leq_7);
+        print_array(leq_7, num_leq_7);
+    }
 }
