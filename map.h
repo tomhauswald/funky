@@ -3,7 +3,7 @@
 #include "foreach.h"
 #include "count.h"
 
-#define where(Begin, ReadValStmt, IncrStmt, End, Pred, OptOutBuf, OptOutLen) ({ \
+#define map(Begin, ReadValStmt, IncrStmt, End, Expr, OptOutBuf, OptOutLen) ({ \
     __auto_type it     =  (Begin); \
     __auto_type outbuf = &(ReadValStmt); \
     __auto_type value  =  (ReadValStmt); \
@@ -15,17 +15,15 @@
         outbuf = (OptOutBuf); \
     } \
     else { /* Heap-allocate new output buffer. */ \
-        size_t num_matches = count(Begin, IncrStmt, End, Pred); \
-        outbuf = malloc( num_matches * sizeof(value) ); \
+        size_t num_elems = count(Begin, IncrStmt, End, true); \
+        outbuf = malloc( num_elems * sizeof(value) ); \
     } \
     \
     foreach( \
         Begin, \
         IncrStmt, \
         End, \
-        if(Pred) { \
-            outbuf[written++] = (ReadValStmt); \
-        } \
+        { outbuf[written++] = (Expr); } \
     ); \
     \
     if(NULL != (OptOutLen)) *(size_t *)(OptOutLen) = written; \
@@ -33,8 +31,8 @@
     outbuf; \
 })
 
-#define where_linear(Begin, Count, Pred, OptOutBuf, OptOutLen) \
-    where(Begin, *it, it++, (Begin) + (Count), Pred, OptOutBuf, OptOutLen);
+#define map_linear(Begin, Count, Expr, OptOutBuf, OptOutLen) \
+    map(Begin, *it, it++, (Begin) + (Count), Expr, OptOutBuf, OptOutLen);
 
-#define where_static(Array, Pred, OptOutBuf, OptOutLen) \
-    where_linear(Array, static_array_len(Array), Pred, OptOutBuf, OptOutLen);
+#define map_static(Array, Expr, OptOutBuf, OptOutLen) \
+    map_linear(Array, static_array_len(Array), Expr, OptOutBuf, OptOutLen);

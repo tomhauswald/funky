@@ -6,6 +6,7 @@ extern void test_all(void);
 extern void test_count(void);
 extern void test_where(void);
 extern void test_sum(void);
+extern void test_map(void);
 
 char const* categories[] = { 
     "foreach", 
@@ -14,6 +15,7 @@ char const* categories[] = {
     "count",
     "sum",
     "where",
+    "map"
 };
 
 void (*funcs[])(void) = {
@@ -23,6 +25,7 @@ void (*funcs[])(void) = {
     &test_count,
     &test_sum,
     &test_where,
+    &test_map
 };
 
 int main(void) {
