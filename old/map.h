@@ -19,7 +19,7 @@
         outbuf = malloc( num_elems * sizeof(value) ); \
     } \
     \
-    foreach( \
+    _fk_foreach_base( \
         Begin, \
         IncrStmt, \
         End, \
