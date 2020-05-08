@@ -121,13 +121,36 @@ void test_all() {
     testcase_end();
 }
 
+void test_sum() {
+}
+
+void test_count() {
+    testcase_start("count_linear", "3");
+    printf("%ld", fk_count_linear(hello, hello + 5, c, c != 'l'));
+    testcase_end();
+
+    testcase_start("count_ntimes", "1");
+    printf("%ld", fk_count_ntimes(hello, 10, c, c == ','));
+    testcase_end();
+
+    testcase_start("count_static", "10");
+    printf("%ld", fk_count_static(hello, c, c >= 'a' && c <= 'z'));
+    testcase_end();
+
+    testcase_start("count_nullterm", "1");
+    printf("%ld", fk_count_nullterm(pList, (_fk_iter = _fk_iter->pNext), str, !strcmp(str.text, "hello")));
+    testcase_end();
+}
+
 int main() {
     setup();
 
     test_foreach();
     test_any();
     test_all();
-    
+    test_sum();
+    test_count();
+
     teardown();
     return 0;
 }

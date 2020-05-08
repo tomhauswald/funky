@@ -16,22 +16,22 @@
 #define _FK_VARARG9(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, ...) _9
 
 // Stops at null terminator.
-#define _fk_nullterm(func, Begin, IncrStmt, Varname, Body) \
-    fk_##func(Begin, IncrStmt, NULL, Varname, Body)
+#define _fk_nullterm(func, Begin, IncrStmt, Varname, ...) \
+    fk_##func(Begin, IncrStmt, NULL, Varname, __VA_ARGS__)
 
 // Uses operator++ to move to the next element.
-#define _fk_linear(func, Begin, End, Varname, Body) \
-    fk_##func(Begin, _fk_iter++, End, Varname, Body)
+#define _fk_linear(func, Begin, End, Varname, ...) \
+    fk_##func(Begin, _fk_iter++, End, Varname, __VA_ARGS__)
 
 // Uses operator++ to move to the next element and
 // stops after 'Count' elements.
-#define _fk_ntimes(func, Begin, Count, Varname, Body) \
-    fk_##func##_linear(Begin, ((Begin) + (Count)), Varname, Body)
+#define _fk_ntimes(func, Begin, Count, Varname, ...) \
+    fk_##func##_linear(Begin, ((Begin) + (Count)), Varname, __VA_ARGS__)
 
 // Visits all elements of the statically allocated array 'Array'.
 // Uses sizeof('Array') / sizeof(('Array')[0]) to compute element count.
-#define _fk_static(func, Array, Varname, Body) \
-    fk_##func##_ntimes(Array, sizeof(Array) / sizeof((Array)[0]), Varname, Body)
+#define _fk_static(func, Array, Varname, ...) \
+    fk_##func##_ntimes(Array, sizeof(Array) / sizeof((Array)[0]), Varname, __VA_ARGS__)
 
 //------------------------------------------------------
 // Performs an action on each element of a collection.
@@ -117,16 +117,83 @@
     _fk_static(all, Array, Varname, Pred)
 
 
-// TODO: Add descriptions and variant macros.
-
-#define fk_sum(Begin, IncrStmt, End, Expr) ({ \
-    int64_t _fk_sum = 0; \
-    fk_foreach(Begin, IncrStmt, End, _fk_sum += (Expr)); \
+//------------------------------------------------------
+// Returns the sum of an expression evaluated for all 
+// elements of a collection.
+//------------------------------------------------------
+// Starting at 'Begin', _fk_iter is advanced using 
+// 'IncrStmt' until it equates to 'End', s.t. 'End' 
+// shall point to the first element behind the 
+// collection. (Think C++ STL std::end)
+// 'Expr' is computed for each value of 'Varname',
+// which is obtained by dereferencing _fk_iter.
+#define fk_sum(Begin, IncrStmt, End, Varname, Expr, AccumType) ({ \
+    AccumType _fk_sum = 0; \
+    fk_foreach(Begin, IncrStmt, End, Varname, _fk_sum += (AccumType) (Expr)); \
     _fk_sum; \
 })
 
-#define fk_count(Begin, IncrStmt, End, Pred) \
-    fk_sum(Begin, IncrStmt, End, !!(Pred))
+#define fk_sum_nullterm(Begin, IncrStmt, Varname, Expr, AccumType) \
+    _fk_nullterm(sum, Begin, IncrStmt, Varname, Expr, AccumType)
 
+#define fk_sum_linear(Begin, End, Varname, Expr, AccumType) \
+    _fk_linear(sum, Begin, End, Varname, Expr, AccumType)
+
+#define fk_sum_ntimes(Begin, Count, Varname, Expr, AccumType) \
+    _fk_ntimes(sum, Begin, Count, Varname, Expr, AccumType)
+
+#define fk_sum_static(Array, Varname, Expr, AccumType) \
+    _fk_static(sum, Array, Varname, Expr, AccumType)
+
+// Signed 64-bit accumulator.
+#define fk_ssum64_nullterm(Begin, IncrStmt, Varname, Expr) \
+    fk_sum_nullterm(Begin, IncrStmt, Varname, Expr, int64_t)
+
+#define fk_ssum64_linear(Begin, End, Varname, Expr) \
+    fk_sum_linear(Begin, End, Varname, Expr, int64_t)
+
+#define fk_ssum64_ntimes(Begin, Count, Varname, Expr) \
+    fk_sum_ntimes(Begin, Count, Varname, Expr, int64_t)
+
+#define fk_ssum64_static(Array, Varname, Expr) \
+    fk_sum_static(Array, Varname, Expr, int64_t)
+
+// Unsigned 64-bit accumulator.
+#define fk_usum64_nullterm(Begin, IncrStmt, Varname, Expr) \
+    fk_sum_nullterm(Begin, IncrStmt, Varname, Expr, uint64_t)
+
+#define fk_usum64_linear(Begin, End, Varname, Expr) \
+    fk_sum_linear(Begin, End, Varname, Expr, uint64_t)
+
+#define fk_usum64_ntimes(Begin, Count, Varname, Expr) \
+    fk_sum_ntimes(Begin, Count, Varname, Expr, uint64_t)
+
+#define fk_usum64_static(Array, Varname, Expr) \
+    fk_sum_static(Array, Varname, Expr, uint64_t)
+
+//------------------------------------------------------
+// Returns the count of elements of a collection that
+// satisfy a given predicate.
+//------------------------------------------------------
+// Starting at 'Begin', _fk_iter is advanced using 
+// 'IncrStmt' until it equates to 'End', s.t. 'End' 
+// shall point to the first element behind the 
+// collection. (Think C++ STL std::end)
+// 'Pred' is checked for each value of 'Varname',
+// which is obtained by dereferencing _fk_iter.
+#define fk_count(Begin, IncrStmt, End, Varname, Pred) \
+    fk_sum(Begin, IncrStmt, End, Varname, !!(Pred), size_t)
+
+#define fk_count_nullterm(Begin, IncrStmt, Varname, Pred) \
+    _fk_nullterm(count, Begin, IncrStmt, Varname, Pred)
+
+#define fk_count_linear(Begin, End, Varname, Pred) \
+    _fk_linear(count, Begin, End, Varname, Pred)
+
+#define fk_count_ntimes(Begin, Count, Varname, Pred) \
+    _fk_ntimes(count, Begin, Count, Varname, Pred)
+
+#define fk_count_static(Array, Varname, Pred) \
+    _fk_static(count, Array, Varname, Pred)
 
 // TODO: Port old macros.
