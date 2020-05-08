@@ -36,6 +36,7 @@ void string_list_free(string_list_t* pList) {
     }
 }
 
+static const int numbers[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 static const char hello[] = "hello, world";
 static string_list_t* pList;
 
@@ -122,6 +123,21 @@ void test_all() {
 }
 
 void test_sum() {
+    testcase_start("sum_linear", "10");
+    printf("%ld", fk_ssum64_linear(numbers, numbers + 5, n, n));
+    testcase_end();
+
+    testcase_start("sum_ntimes", "45");
+    printf("%ld", fk_ssum64_ntimes(numbers, 10, n, n));
+    testcase_end();
+    
+    testcase_start("sum_static", "45");
+    printf("%ld", fk_ssum64_static(numbers, n, n));
+    testcase_end();
+    
+    testcase_start("sum_nullterm", "12");
+    printf("%ld", fk_ssum64_nullterm(pList, (_fk_iter = _fk_iter->pNext), str, strlen(str.text)));
+    testcase_end();
 }
 
 void test_count() {
@@ -142,6 +158,12 @@ void test_count() {
     testcase_end();
 }
 
+void test_mean() {
+    testcase_start("mean_linear", "2.00");
+    printf("%0.2lf", fk_mean_linear(numbers, numbers + 5, n, n));
+    testcase_end();
+}
+
 int main() {
     setup();
 
@@ -150,6 +172,7 @@ int main() {
     test_all();
     test_sum();
     test_count();
+    test_mean();
 
     teardown();
     return 0;

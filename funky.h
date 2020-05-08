@@ -196,4 +196,31 @@
 #define fk_count_static(Array, Varname, Pred) \
     _fk_static(count, Array, Varname, Pred)
 
-// TODO: Port old macros.
+
+//------------------------------------------------------
+// Returns the mean of an expression evaluated for all 
+// elements of a collection.
+//------------------------------------------------------
+// Starting at 'Begin', _fk_iter is advanced using 
+// 'IncrStmt' until it equates to 'End', s.t. 'End' 
+// shall point to the first element behind the 
+// collection. (Think C++ STL std::end)
+// 'Expr' is computed for each value of 'Varname',
+// which is obtained by dereferencing _fk_iter.
+#define fk_mean(Begin, IncrStmt, End, Varname, Expr) ({ \
+    double _fk_count = 0.0; \
+    double _fk_accum = fk_sum(Begin, IncrStmt, End, Varname, (++_fk_count, Expr), double); \
+    _fk_accum / _fk_count; \
+})
+
+#define fk_mean_nullterm(Begin, IncrStmt, Varname, Expr) \
+    _fk_nullterm(mean, Begin, IncrStmt, Varname, Expr)
+
+#define fk_mean_linear(Begin, End, Varname, Expr) \
+    _fk_linear(mean, Begin, End, Varname, Expr)
+
+#define fk_mean_ntimes(Begin, Count, Varname, Expr) \
+    _fk_ntimes(mean, Begin, Count, Varname, Expr)
+
+#define fk_mean_static(Array, Varname, Expr) \
+    _fk_static(mean, Array, Varname, Expr)
