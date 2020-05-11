@@ -4,17 +4,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#define _FK_VARARG0(_0, ...) _0
-#define _FK_VARARG1(_0, _1, ...) _1
-#define _FK_VARARG2(_0, _1, _2, ...) _2
-#define _FK_VARARG3(_0, _1, _2, _3, ...) _3
-#define _FK_VARARG4(_0, _1, _2, _3, _4, ...) _4
-#define _FK_VARARG5(_0, _1, _2, _3, _4, _5, ...) _5
-#define _FK_VARARG6(_0, _1, _2, _3, _4, _5, _6, ...) _6
-#define _FK_VARARG7(_0, _1, _2, _3, _4, _5, _6, _7, ...) _7
-#define _FK_VARARG8(_0, _1, _2, _3, _4, _5, _6, _7, _8, ...) _8
-#define _FK_VARARG9(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, ...) _9
-
 // Stops at null terminator.
 #define _fk_nullterm(func, Begin, IncrStmt, Varname, ...) \
     fk_##func(Begin, IncrStmt, NULL, Varname, __VA_ARGS__)
