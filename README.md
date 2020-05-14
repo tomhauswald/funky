@@ -21,13 +21,14 @@ The action to perform. (Function of `Varname`)
 ### any ###
 Check whether at least one element satisfies a predicate.
 Parameters:  
-* `Varname`
+* `Varname`  
 The placeholder name to assign to elements.  
-* `Pred`
+* `Pred`  
 The predicate to check. (Function of `Varname`)
 
 ### all ### 
 Check whether all elements satisfy a predicate.
+Parameters:  
 * `Varname`  
 The placeholder name to assign to elements.
 * `Pred`  
@@ -35,6 +36,7 @@ The predicate to check. (Function of `Varname`)
 
 ### count ###
 Compute the number of elements that satisfy a predicate.
+Parameters:  
 * `Varname`  
 The placeholder name to assign to elements.
 * `Pred`  
@@ -42,6 +44,7 @@ The predicate to check. (Function of `Varname`)
 
 ### sum ###
 Evaluate an expression for each element and compute the sum thereof.
+Parameters:  
 * `Varname`  
 The placeholder name to assign to elements.
 * `Expr`  
@@ -52,6 +55,7 @@ Shorthands for (un-)signed 64-bit accumulators: ssum64, usum64.
 
 ### mean ###
 Evaluate an expression for each element and compute the mean thereof.
+Parameters:  
 * `Varname`  
 The placeholder name to assign to elements.
 * `Expr`  
@@ -67,11 +71,7 @@ Apply an operation on a static array.
 Parameters: 
 * `Array`  
 The statically sized array.  
-Number of elements to be computable as
-```C
-sizeof(Array) / sizeof(Array[0])
-```
-.
+Number of elements to be computable as `sizeof(Array) / sizeof(Array[0])`.
 
 ### ntimes ### 
 Apply an operation on a fixed number of elements that are laid out linearly in memory.  
@@ -84,17 +84,17 @@ Number of elements to visit.
 ### nullterm ### 
 Apply an operation on a NULL-terminated sequence.  
 Parameters:
-* `Begin`
+* `Begin`  
 Pointer to the start of the collection.
-* `IncrStmt`
+* `IncrStmt`  
 Statement that moves _fk_iter to the next element.
 
 ### linear ### 
 Apply an operation on a collection with linear memory layout.  
 Parameters:
-* `Begin`
+* `Begin`  
 Pointer to the start of the collection.
-* `End`
+* `End`  
 Pointer past the end of the collection.
 
 ---
