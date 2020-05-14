@@ -20,42 +20,42 @@ The action to perform. (Function of `Varname`)
 
 ### any ###
 Check whether at least one element satisfies a predicate.
-Parameters:
-  `Varname`
-    The placeholder name to assign to elements.
-  `Pred`
-    The predicate to check. (Function of `Varname`)
+Parameters:  
+* `Varname`
+The placeholder name to assign to elements.  
+* `Pred`
+The predicate to check. (Function of `Varname`)
 
 ### all ### 
 Check whether all elements satisfy a predicate.
-  `Varname`
-    The placeholder name to assign to elements.
-  `Pred`
-    The predicate to check. (Function of `Varname`)
+* `Varname`  
+The placeholder name to assign to elements.
+* `Pred`  
+The predicate to check. (Function of `Varname`)
 
 ### count ###
 Compute the number of elements that satisfy a predicate.
-  `Varname`
-    The placeholder name to assign to elements.
-  `Pred`
-    The predicate to check. (Function of `Varname`)
+* `Varname`  
+The placeholder name to assign to elements.
+* `Pred`  
+The predicate to check. (Function of `Varname`)
 
 ### sum ###
 Evaluate an expression for each element and compute the sum thereof.
-  `Varname`
-    The placeholder name to assign to elements.
-  `Expr`
-    The expression the sum of which to compute. (Function of `Varname`)
-  `AccumType`
-    Datatype of the accumulator. 
-    Shorthands for (un-)signed 64-bit accumulators: ssum64, usum64.
+* `Varname`  
+The placeholder name to assign to elements.
+* `Expr`  
+The expression the sum of which to compute. (Function of `Varname`)
+* `AccumType`  
+Datatype of the accumulator.  
+Shorthands for (un-)signed 64-bit accumulators: ssum64, usum64.
 
 ### mean ###
 Evaluate an expression for each element and compute the mean thereof.
-  `Varname`
-    The placeholder name to assign to elements.
-  `Expr`
-    The expression the mean of which to compute. (Function of `Varname`)
+* `Varname`  
+The placeholder name to assign to elements.
+* `Expr`  
+The expression the mean of which to compute. (Function of `Varname`)
 
 ---
 
@@ -63,36 +63,40 @@ Evaluate an expression for each element and compute the mean thereof.
 Each operation comes in the following flavors:
 
 ### static ### 
-Apply an operation on a static array.
+Apply an operation on a static array.  
 Parameters: 
-  `Array`:
-    The statically sized array.
-    Requires the number of elements to be computable as sizeof(Array) / sizeof(Array[0]).
+* `Array`  
+The statically sized array.  
+Number of elements to be computable as
+```C
+sizeof(Array) / sizeof(Array[0])
+```
+.
 
 ### ntimes ### 
-Apply an operation on a fixed number of elements that are
-laid out linearly in memory.
+Apply an operation on a fixed number of elements that are laid out linearly in memory.  
 Parameters:
-  `Begin`:
-    Pointer to the start of the collection.
-  `Count`:
-    Number of elements to visit.
+* `Begin`  
+Pointer to the start of the collection.
+* `Count`  
+Number of elements to visit.
 
 ### nullterm ### 
-Apply an operation on a NULL-terminated sequence.
+Apply an operation on a NULL-terminated sequence.  
 Parameters:
-  `Begin`:
-    Pointer to the start of the collection.
-  `IncrStmt`:
-    Statement that moves _fk_iter to the next element.
+* `Begin`
+Pointer to the start of the collection.
+* `IncrStmt`
+Statement that moves _fk_iter to the next element.
 
 ### linear ### 
-Apply an operation on a collection with linear memory layout.
+Apply an operation on a collection with linear memory layout.  
 Parameters:
-  `Begin`:
-    Pointer to the start of the collection.
-  `End`:
-    Pointer past the end of the collection.
+* `Begin`
+Pointer to the start of the collection.
+* `End`
+Pointer past the end of the collection.
+
 ---
 ## Examples ##
 ```C
