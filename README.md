@@ -11,12 +11,12 @@ was previously required in order to pass around pointers to named functions.
 In its current state, funky provides the following operations:
 
 ### foreach ###
-Perform an action on each element.
-Parameters:
-  `Varname`
-    The placeholder name to assign to elements.
-  `Action`
-    The action to perform. (Function of `Varname`)
+Perform an action on each element.  
+Parameters:  
+* `Varname`  
+The placeholder name to assign to elements.
+* `Action`  
+The action to perform. (Function of `Varname`)
 
 ### any ###
 Check whether at least one element satisfies a predicate.
